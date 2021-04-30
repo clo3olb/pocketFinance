@@ -1,3 +1,10 @@
+@mixin bottomBorderForDivision {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -5,4 +12,17 @@ body {
 
 * {
   // outline: 1px solid blue;
+}
+
+.stockDataCard {
+  &__tableRow {
+    @include bottomBorderForDivision;
+  }
+  & &__tableCell {
+    padding: 6px 0;
+  }
+}
+
+.sideBarItem {
+  @include bottomBorderForDivision;
 }

@@ -7,7 +7,7 @@ import {
   BoxTypes,
 } from "grommet";
 
-const pad = "small";
+const pad = "medium";
 
 export const Card: React.FC<BoxTypes> = (props) => {
   return (

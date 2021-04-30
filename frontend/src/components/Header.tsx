@@ -20,7 +20,10 @@ const Header = () => {
           direction="row"
           pad={{ horizontal: "medium", vertical: "xsmall" }}
           gap="small"
-          wrapperProps={{ background: "brand" }}
+          wrapperProps={{
+            background: "brand",
+            style: { position: "sticky", top: 0 },
+          }}
         >
           {/* logo */}
           <Box direction="row" align="center">
