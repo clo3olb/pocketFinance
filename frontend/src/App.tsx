@@ -1,5 +1,5 @@
 import { Grommet, Box, ResponsiveContext } from "grommet";
-import "scss/reset.scss";
+import "styles/reset.css";
 import Container from "components/Container";
 import Header from "components/Header";
 import StockDataCard from "components/StockDataCard";
