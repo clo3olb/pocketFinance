@@ -15,6 +15,8 @@ const GET_HISTORY_BY_TICKER = gql`
   }
 `;
 
+type rangeType = 7 | 30 | 90 | 365 | 1825;
+
 const parseDate = (inputDate: any) => {
   let dateObject = new Date(inputDate);
   const year = dateObject.getFullYear();
@@ -29,23 +31,31 @@ const MS_IN_A_DAY = 60 * 60 * 24 * 1000; // milisecondes in a day
 
 type LineChartProps = {
   ticker: string;
-  period: "d" | "w" | "m";
+  range: rangeType;
 };
 
 const LineChart: React.FC<LineChartProps> = (props) => {
-  const { ticker, period } = props;
+  const { ticker, range } = props;
 
-  const NUMBER_OF_DAYS_TO_QUERY = 120;
   const { loading, error, data } = useQuery(GET_HISTORY_BY_TICKER, {
     variables: {
       ticker,
-      from: parseDate(Date.now() - NUMBER_OF_DAYS_TO_QUERY * (period === "d" ? 1 : period === "w" ? 7 : 30) * MS_IN_A_DAY),
+      from: parseDate(Date.now() - range * MS_IN_A_DAY),
       to: parseDate(Date.now()),
-      period,
+      period: "d",
     },
   });
 
-  if (loading) return <Line type="line" data={{}} options={LineChartOptions} />; // This chart with no data is for placeholding
+  if (loading)
+    return (
+      <Box style={{ position: "relative" }}>
+        <Box style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
+          <Spinner size="medium" />
+        </Box>
+        <Line type="line" data={{}} options={LineChartOptions} />
+        {/* This chart with no data is for placeholding */}
+      </Box>
+    );
   if (error) return <p>Error :( {JSON.stringify(error)}</p>;
 
   const queryHistories: HistoryType[] = data.histories;
@@ -72,28 +82,32 @@ type HistoryLineChartProps = {
   ticker: string;
 };
 
-type PeriodType = "d" | "w" | "m";
-
 const HistoryLineChart: React.FC<HistoryLineChartProps> = (props) => {
   const { ticker } = props;
-  const [period, setPeriod] = useState<PeriodType>("d");
-  const handlePeriodButtonClick = (period: PeriodType) => {
-    setPeriod(period);
+  const [range, setRange] = useState<rangeType>(7);
+  const handleRangeButtonClick = (range: rangeType) => {
+    setRange(range);
   };
 
   // return <p>{JSON.stringify(histories)}</p>;
   return (
     <Box gap="medium">
-      <LineChart ticker={ticker} period={period} />
+      <LineChart ticker={ticker} range={range} />
       <Box direction="row" gap="small" justify="center">
-        {(["d", "w", "m"] as PeriodType[]).map((buttonPeriod) => (
+        {([
+          ["1W", 7],
+          ["1M", 30],
+          ["3M", 90],
+          ["1Y", 365],
+          ["5Y", 1825],
+        ] as [string, rangeType][]).map((buttonRange) => (
           <Button
-            key={buttonPeriod}
+            key={buttonRange[0]}
             primary
-            label={buttonPeriod.toUpperCase()}
-            active={period === buttonPeriod}
+            label={buttonRange[0]}
+            active={range === buttonRange[1]}
             size="small"
-            onClick={() => handlePeriodButtonClick(buttonPeriod)}
+            onClick={() => handleRangeButtonClick(buttonRange[1])}
           />
         ))}
       </Box>

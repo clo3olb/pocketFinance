@@ -1,11 +1,16 @@
 import { ChangeEventHandler, useState } from "react";
 import Container from "components/Container";
-import { Box, TextInput, Button, ResponsiveContext } from "grommet";
+import { Box, TextInput, Form, Button, ResponsiveContext } from "grommet";
 import { FormSearch } from "grommet-icons";
+import { useHistory } from "react-router-dom";
 
 const Logo = () => {
+  const history = useHistory();
+  const handleLogoClick = () => {
+    history.push("/");
+  };
   return (
-    <Box direction="row" align="center">
+    <Box direction="row" align="center" onClick={handleLogoClick}>
       <strong style={{ fontWeight: 900 }}>Stock</strong>Price
     </Box>
   );
@@ -13,14 +18,19 @@ const Logo = () => {
 
 const SearchBar = () => {
   const [searchKeyword, setSearchKeyword] = useState("");
+  const history = useHistory();
   const onSearchKeywordChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     setSearchKeyword(event.target.value);
-    console.log("Changed", event.target.value);
+  };
+  const handleSubmit = () => {
+    history.push(searchKeyword);
   };
 
   return (
     <Box flex>
-      <TextInput plain icon={<FormSearch />} placeholder="Search by Ticker..." value={searchKeyword} onChange={onSearchKeywordChange} />
+      <Form onSubmit={handleSubmit}>
+        <TextInput plain icon={<FormSearch />} placeholder="Search by Ticker..." value={searchKeyword} onChange={onSearchKeywordChange} />
+      </Form>
     </Box>
   );
 };
