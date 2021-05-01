@@ -2,14 +2,80 @@ const { ApolloServer, gql } = require("apollo-server");
 const yahooFinance = require("yahoo-finance");
 
 const typeDefs = gql`
-  type Quote {
-    ticker: String
-    regularMarketPreviousClose: Float
+  type Price {
+    maxAge: String
+    preMarketChangePercent: String
+    preMarketChange: String
+    preMarketTime: String
+    preMarketPrice: String
+    preMarketSource: String
+    postMarketChangePercent: String
+    postMarketChange: String
+    postMarketTime: String
+    postMarketPrice: String
+    postMarketSource: String
+    regularMarketChangePercent: Float
+    regularMarketChange: Float
+    regularMarketTime: String
+    priceHint: String
     regularMarketPrice: Float
     regularMarketDayHigh: Float
     regularMarketDayLow: Float
-    regularMarketOpen: Float
+    regularMarketVolume: String
+    averageDailyVolume10Day: String
+    averageDailyVolume3Month: String
+    regularMarketPreviousClose: Float
+    regularMarketSource: String
+    regularMarketOpen: String
+    exchange: String
+    exchangeName: String
+    marketState: String
+    quoteType: String
+    symbol: String
+    underlyingSymbol: String
+    shortName: String
     longName: String
+    currency: String
+    quoteSourceName: String
+    currencySymbol: String
+  }
+
+  type SummaryDetail {
+    maxAge: String
+    priceHint: String
+    previousClose: String
+    open: String
+    dayLow: String
+    dayHigh: String
+    regularMarketPreviousClose: String
+    regularMarketOpen: String
+    regularMarketDayLow: String
+    regularMarketDayHigh: String
+    dividendRate: String
+    dividendYield: String
+    exDividendDate: String
+    payoutRatio: String
+    fiveYearAvgDividendYield: String
+    beta: String
+    trailingPE: String
+    forwardPE: String
+    volume: String
+    regularMarketVolume: String
+    averageVolume: String
+    averageVolume10days: String
+    averageDailyVolume10Day: String
+    bid: String
+    ask: String
+    bidSize: String
+    askSize: String
+    marketCap: String
+    fiftyTwoWeekLow: String
+    fiftyTwoWeekHigh: String
+    priceToSalesTrailing12Months: String
+    fiftyDayAverage: String
+    twoHundredDayAverage: String
+    trailingAnnualDividendRate: String
+    trailingAnnualDividendYield: String
   }
 
   type History {
@@ -25,7 +91,8 @@ const typeDefs = gql`
 
   # 최종
   type Query {
-    quoteByTicker(ticker: String): Quote
+    priceByTicker(ticker: String): Price
+    summaryDetailByTicker(ticker: String): SummaryDetail
     historyByTicker(
       ticker: String
       from: String
@@ -37,42 +104,35 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    async quoteByTicker(parent, args, context, info) {
+    async priceByTicker(parent, { ticker }, context, info) {
       try {
         const rawData = await yahooFinance.quote({
-          symbol: args.ticker,
+          symbol: ticker,
           modules: ["price"], // see the docs for the full list
         });
-
-        const {
-          regularMarketPreviousClose,
-          regularMarketPrice,
-          regularMarketDayHigh,
-          regularMarketDayLow,
-          regularMarketOpen,
-          longName,
-        } = rawData.price;
-        const resQuote = {
-          regularMarketPreviousClose,
-          regularMarketPrice,
-          regularMarketDayHigh,
-          regularMarketDayLow,
-          regularMarketOpen,
-          longName,
-          ticker: args.ticker,
-        };
-        return resQuote;
+        return rawData.price;
       } catch (err) {
         console.error(err);
       }
     },
-    async historyByTicker(parent, args, context, info) {
+    async summaryDetailByTicker(parent, { ticker }, context, info) {
+      try {
+        const rawData = await yahooFinance.quote({
+          symbol: ticker,
+          modules: ["summaryDetail"], // see the docs for the full list
+        });
+        return rawData.summaryDetail;
+      } catch (err) {
+        console.error(err);
+      }
+    },
+    async historyByTicker(parent, { ticker, from, to, period }, context, info) {
       try {
         const history = await yahooFinance.historical({
-          symbol: args.ticker,
-          from: args.from,
-          to: args.to,
-          period: "d",
+          symbol: ticker,
+          from,
+          to,
+          period,
         });
         return history;
       } catch (err) {

@@ -3,7 +3,7 @@ import { ThemeType } from "grommet";
 const Theme: ThemeType = {
   global: {
     colors: {
-      // brand: "#228BE6",
+      brand: "#228BE6",
     },
     font: {
       family: "Montserrat",

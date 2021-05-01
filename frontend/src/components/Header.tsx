@@ -1,17 +1,31 @@
 import { ChangeEventHandler, useState } from "react";
 import Container from "components/Container";
 import { Box, TextInput, Button, ResponsiveContext } from "grommet";
-import { FormSearch, Login, Sign } from "grommet-icons";
+import { FormSearch } from "grommet-icons";
 
-const Header = () => {
+const Logo = () => {
+  return (
+    <Box direction="row" align="center">
+      <strong style={{ fontWeight: 900 }}>Stock</strong>Price
+    </Box>
+  );
+};
+
+const SearchBar = () => {
   const [searchKeyword, setSearchKeyword] = useState("");
-  const onSearchKeywordChange: ChangeEventHandler<HTMLInputElement> = (
-    event
-  ) => {
+  const onSearchKeywordChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     setSearchKeyword(event.target.value);
     console.log("Changed", event.target.value);
   };
 
+  return (
+    <Box flex>
+      <TextInput plain icon={<FormSearch />} placeholder="Search by Ticker..." value={searchKeyword} onChange={onSearchKeywordChange} />
+    </Box>
+  );
+};
+
+const Header = () => {
   return (
     <ResponsiveContext.Consumer>
       {(size) => (
@@ -22,24 +36,12 @@ const Header = () => {
           gap="small"
           wrapperProps={{
             background: "brand",
-            style: { position: "sticky", top: 0 },
+            style: { position: "sticky", top: 0, zIndex: 1 },
+            elevation: "small",
           }}
         >
-          {/* logo */}
-          <Box direction="row" align="center">
-            <strong style={{ fontWeight: 900 }}>Stock</strong>Price
-          </Box>
-
-          {/* search bar  */}
-          <Box flex>
-            <TextInput
-              plain
-              icon={<FormSearch />}
-              placeholder="Search by Ticker..."
-              value={searchKeyword}
-              onChange={onSearchKeywordChange}
-            />
-          </Box>
+          <Logo />
+          <SearchBar />
 
           {/* login state */}
           <Button size="small" plain label="Login" />
