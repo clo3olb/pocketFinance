@@ -1,20 +1,24 @@
-import { Grommet, Box, ResponsiveContext } from "grommet";
-import "styles/reset.css";
-import Container from "components/Container";
-import Header from "components/Header";
-import PageHome from "pages/Home";
-import PageStockDetail from "pages/StockDetail";
-import SideBar from "components/SideBar";
-import customTheme from "customTheme";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Grommet, Box, ResponsiveContext } from "grommet"
+import "styles/reset.css"
+import Container from "components/Container"
+import Header from "components/Header"
+import PageHome from "pages/Home"
+import PageStockDetail from "pages/StockDetail"
+import SideBar from "components/SideBar"
+import customTheme from "customTheme"
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import PageSearch from "pages/Search";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client"
+import PageSearch from "pages/Search"
+
+// Initializing Chart Settings
+import { defaults } from "react-chartjs-2"
+defaults.font.family = "Montserrat"
 
 const client = new ApolloClient({
   uri: "http://localhost:4000",
   cache: new InMemoryCache(),
-});
+})
 
 const App = () => {
   return (
@@ -46,7 +50,7 @@ const App = () => {
         </Router>
       </ApolloProvider>
     </Grommet>
-  );
-};
+  )
+}
 
-export default App;
+export default App

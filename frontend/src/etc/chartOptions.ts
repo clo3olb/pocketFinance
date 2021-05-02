@@ -1,6 +1,6 @@
-import { ChartOptions } from "chart.js";
+import { ChartOptions } from "chart.js"
 
-export const LineChartOptions: ChartOptions = {
+export const HistoryLineChartOptions: ChartOptions = {
   plugins: {
     legend: {
       display: false,
@@ -19,7 +19,7 @@ export const LineChartOptions: ChartOptions = {
       bodyColor: "#6FFFAF",
       callbacks: {
         label: function (this, data) {
-          return "$" + data.formattedValue;
+          return "$" + data.formattedValue
         },
       },
     },
@@ -54,4 +54,51 @@ export const LineChartOptions: ChartOptions = {
       },
     },
   },
-};
+}
+
+export const EarningsBarChartOptions: ChartOptions = {
+  plugins: {
+    legend: {
+      labels: {
+        boxWidth: 14,
+      },
+    },
+    tooltip: {
+      intersect: false,
+      bodySpacing: 5,
+      callbacks: {
+        label: function (context) {
+          const {
+            formattedValue,
+            dataset: { label },
+          } = context
+          if (formattedValue && label) return label.slice(0, 3) + ": " + formattedValue + "%"
+          return "Error"
+        },
+      },
+    },
+  },
+
+  hover: {
+    mode: "x",
+    intersect: false,
+  },
+  scales: {
+    y: {
+      beginAtZero: true,
+      ticks: {
+        // Include a dollar sign in the ticks
+        callback: function (value, index, values) {
+          return value + "%"
+        },
+      },
+    },
+    x: {
+      ticks: {
+        font: {
+          weight: "bold",
+        },
+      },
+    },
+  },
+}

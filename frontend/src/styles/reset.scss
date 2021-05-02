@@ -14,7 +14,7 @@ body {
   // outline: 1px solid blue;
 }
 
-.stockDataCard {
+.stockPriceCard {
   &__tableRow {
     @include bottomBorderForDivision;
   }

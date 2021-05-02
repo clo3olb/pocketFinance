@@ -1,10 +1,11 @@
-import React from "react";
-import { useQuery, gql } from "@apollo/client";
-import { Card, CardHeader, CardBody, CardFooter } from "components/Card";
-import { Heading, Box, Text, TableRow, TableBody, TableCell, Table, Spinner } from "grommet";
+import React from "react"
+import { useQuery, gql } from "@apollo/client"
+import { Card, CardHeader, CardBody, CardFooter } from "components/Card"
+import { Heading, Box, Text, TableRow, TableBody, TableCell, Table, Spinner } from "grommet"
 // import { Add } from "grommet-icons";
-import HistoryLineChart from "components/HistoryLineChart";
-import { PriceType } from "types/QueryDataType";
+import HistoryLineChart from "components/HistoryLineChart"
+import { PriceType } from "types/QueryDataType"
+import Message from "./Message"
 
 const GET_PRICE_BY_TICKER = gql`
   query priceByTicker($ticker: String) {
@@ -21,46 +22,34 @@ const GET_PRICE_BY_TICKER = gql`
       longName
     }
   }
-`;
+`
 
-type StockDataCardProps = {
-  ticker: string;
-};
+type StockPriceCardProps = {
+  ticker: string
+}
 
-const StockDataCard: React.FC<StockDataCardProps> = (props) => {
-  const { ticker } = props;
+const StockPriceCard: React.FC<StockPriceCardProps> = (props) => {
+  const { ticker } = props
 
   const { loading, error, data } = useQuery(GET_PRICE_BY_TICKER, {
     variables: { ticker },
-  });
+  })
 
   if (loading)
     return (
       <Box flex justify="center" align="center">
         <Spinner size="large" />
       </Box>
-    );
-  if (error)
-    return (
-      <Card>
-        <CardBody>
-          <Text weight="bold">Error :(</Text>
-          <Text weight="bold">{JSON.stringify(error)}</Text>
-        </CardBody>
-      </Card>
-    );
+    )
+  if (error) return <Message size="large" type="error" message="Error :(" />
   if (data.price === null || data.price === undefined)
-    return (
-      <Card>
-        <CardBody align="center">
-          <Text weight="bold">No Data Found</Text>
-        </CardBody>
-      </Card>
-    );
+    return <Message size="large" type="unknown" message="No Data Found" />
 
-  const priceData: PriceType = data.price;
+  const priceData: PriceType = data.price
+  const { regularMarketChange: change, regularMarketChangePercent: changePercent } = priceData
+  const isChangePositive = change > 0
   return (
-    <Card animation={["slideUp", "fadeIn"]} className="stockDataCard">
+    <Card animation={["slideUp", "fadeIn"]} className="stockPriceCard">
       <CardHeader background="brand" direction="column" align="start" gap="small">
         <Box direction="row" fill="horizontal">
           <Box flex>
@@ -77,9 +66,9 @@ const StockDataCard: React.FC<StockDataCardProps> = (props) => {
           <Text weight="bold" size="2xl">
             ${priceData.regularMarketPrice}
           </Text>
-          <Text size="large" color="green">
-            {Number(priceData.regularMarketChange).toFixed(2)}
-            {`(${(priceData.regularMarketChangePercent * 100).toFixed(2)}%)`}
+          <Text size="large" color={isChangePositive ? "green" : "red"}>
+            {("$" + Number(change).toFixed(2).toString()).replace("$-", "-$")}
+            {`(${(changePercent * 100).toFixed(2)}%)`}
           </Text>
         </Box>
         <HistoryLineChart ticker={ticker} />
@@ -94,13 +83,13 @@ const StockDataCard: React.FC<StockDataCardProps> = (props) => {
                 ["High", priceData.regularMarketDayHigh],
                 ["Low", priceData.regularMarketDayLow],
               ].map((row) => (
-                <TableRow key={row[0]} className="stockDataCard__tableRow">
-                  <TableCell className="stockDataCard__tableCell">
+                <TableRow key={row[0]} className="stockPriceCard__tableRow">
+                  <TableCell className="stockPriceCard__tableCell">
                     <Text size="small">
                       <strong>{row[0]}</strong>
                     </Text>
                   </TableCell>
-                  <TableCell justify="end" className="stockDataCard__tableCell">
+                  <TableCell justify="end" className="stockPriceCard__tableCell">
                     <Text textAlign="end" size="small">
                       {row[1]}
                     </Text>
@@ -112,7 +101,7 @@ const StockDataCard: React.FC<StockDataCardProps> = (props) => {
         </Box>
       </CardFooter>
     </Card>
-  );
-};
+  )
+}
 
-export default StockDataCard;
+export default StockPriceCard
