@@ -1,8 +1,8 @@
-import { ChangeEventHandler, useState } from "react";
+import { ChangeEventHandler, useEffect, useRef, useState } from "react";
 import Container from "components/Container";
-import { Box, TextInput, Form, Button, ResponsiveContext } from "grommet";
+import { Box, TextInput, Form, ResponsiveContext } from "grommet";
 import { FormSearch } from "grommet-icons";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 const Logo = () => {
   const history = useHistory();
@@ -18,18 +18,35 @@ const Logo = () => {
 
 const SearchBar = () => {
   const [searchKeyword, setSearchKeyword] = useState("");
+  const [focused, setFocused] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
   const history = useHistory();
-  const onSearchKeywordChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (searchKeyword) history.push(`/search/${searchKeyword}`);
+  }, [searchKeyword, history]);
+
+  useEffect(() => {
+    if (location.pathname.split("/")[1] !== "search") {
+      setFocused(false);
+      setSearchKeyword("");
+    }
+  }, [location]);
+
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     setSearchKeyword(event.target.value);
   };
-  const handleSubmit = () => {
-    history.push(searchKeyword);
+  const handleIconClick = () => {
+    setFocused(!focused);
+    if (inputRef && inputRef.current) inputRef.current.focus();
   };
 
   return (
-    <Box flex>
-      <Form onSubmit={handleSubmit}>
-        <TextInput plain icon={<FormSearch />} placeholder="Search by Ticker..." value={searchKeyword} onChange={onSearchKeywordChange} />
+    <Box flex fill direction="row" align="center" justify="end">
+      <FormSearch onClick={handleIconClick} style={{ cursor: "pointer" }} />
+      <Form id="searchBar__form" className={focused ? "focused" : ""}>
+        <TextInput ref={inputRef} plain placeholder="Search..." value={searchKeyword} onChange={handleChange} />
       </Form>
     </Box>
   );
@@ -52,10 +69,6 @@ const Header = () => {
         >
           <Logo />
           <SearchBar />
-
-          {/* login state */}
-          <Button size="small" plain label="Login" />
-          <Button size="small" primary label="Signin" />
         </Container>
       )}
     </ResponsiveContext.Consumer>

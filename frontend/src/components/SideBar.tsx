@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Accordion, AccordionPanel, Box, Text, Spinner } from "grommet";
+import { Accordion, AccordionPanel, Box, Text } from "grommet";
 import { PriceType } from "types/QueryDataType";
 import { useQuery, gql } from "@apollo/client";
 import { Link } from "react-router-dom";
@@ -43,7 +43,9 @@ const SideBarItem: React.FC<SideBarItemProps> = (props) => {
           <Text size="large" weight="bold">
             {priceData.symbol}
           </Text>
-          <Text size="xsmall">{priceData.longName.length > 17 ? priceData.longName.slice(0, 16) + "..." : priceData.longName}</Text>
+          <Text size="xsmall">
+            {priceData.longName.length > 17 ? priceData.longName.slice(0, 16) + "..." : priceData.longName}
+          </Text>
         </Box>
         <Box align="end">
           <Text weight="bold" size="small">

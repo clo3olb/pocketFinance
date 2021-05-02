@@ -60,7 +60,7 @@ const StockDataCard: React.FC<StockDataCardProps> = (props) => {
 
   const priceData: PriceType = data.price;
   return (
-    <Card animation="slideUp" className="stockDataCard">
+    <Card animation={["slideUp", "fadeIn"]} className="stockDataCard">
       <CardHeader background="brand" direction="column" align="start" gap="small">
         <Box direction="row" fill="horizontal">
           <Box flex>

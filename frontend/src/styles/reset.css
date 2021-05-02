@@ -21,3 +21,11 @@ a {
 .sideBarItem:last-child {
   border-bottom: none;
 }
+
+#searchBar__form {
+  width: 0;
+  transition: width 0.2s ease-in-out;
+}
+#searchBar__form.focused {
+  width: 100%;
+}

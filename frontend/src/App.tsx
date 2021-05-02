@@ -9,6 +9,7 @@ import customTheme from "customTheme";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import PageSearch from "pages/Search";
 
 const client = new ApolloClient({
   uri: "http://localhost:4000",
@@ -27,12 +28,10 @@ const App = () => {
                 {/* Main Column Begins*/}
                 <Box flex gap="medium">
                   <Switch>
-                    <Route path="/" exact>
-                      <PageHome />
-                    </Route>
-                    <Route path="/:ticker">
-                      <PageStockDetail />
-                    </Route>
+                    <Route path="/" exact component={PageHome} />
+                    <Route path="/search/:searchKeyword" component={PageSearch} />
+                    <Route path="/search" component={PageSearch} />
+                    <Route path="/:ticker" component={PageStockDetail} />
                   </Switch>
                 </Box>
                 {/* Main Column Ends */}
