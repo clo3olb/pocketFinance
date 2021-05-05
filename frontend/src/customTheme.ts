@@ -1,12 +1,14 @@
-import { ThemeType } from "grommet";
+import { ThemeType } from "grommet"
 
 const Theme: ThemeType = {
   global: {
     colors: {
-      // brand: "#228BE6",
+      // brand: "#e55039",
+      // brand: "#3B3B98",
     },
     font: {
-      family: "Montserrat",
+      // family: "Montserrat",
+      // family: "GmarketSansMedium",
     },
     focus: {
       outline: {
@@ -29,6 +31,6 @@ const Theme: ThemeType = {
       },
     },
   },
-};
+}
 
-export default Theme;
+export default Theme

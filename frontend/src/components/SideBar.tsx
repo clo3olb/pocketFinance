@@ -1,8 +1,10 @@
-import { useState } from "react";
-import { Accordion, AccordionPanel, Box, Text } from "grommet";
-import { PriceType } from "types/QueryDataType";
-import { useQuery, gql } from "@apollo/client";
-import { Link } from "react-router-dom";
+import { Box, Text, Sidebar as GSidebar, Menu } from "grommet"
+import { PriceType } from "types/QueryDataType"
+import { useQuery, gql } from "@apollo/client"
+import { Link } from "react-router-dom"
+import Translation, { useLanguageContext } from "./Translation"
+
+import { Language } from "grommet-icons"
 
 const GET_PRICE_BY_TICKER = gql`
   query priceByTicker($ticker: String) {
@@ -13,32 +15,40 @@ const GET_PRICE_BY_TICKER = gql`
       longName
     }
   }
-`;
+`
 
 type SideBarItemProps = {
-  ticker: string;
+  ticker: string
+  index?: number
   //   link?: string;
-};
+}
 
-const SideBarItem: React.FC<SideBarItemProps> = (props) => {
-  const { ticker } = props;
+const SideBarItem: React.FC<SideBarItemProps> = ({ ticker, index }) => {
   const { loading, error, data } = useQuery(GET_PRICE_BY_TICKER, {
     variables: { ticker },
-  });
+  })
 
-  if (loading) return <Box></Box>;
+  if (loading) return <Box></Box>
   if (error)
     return (
       <Box>
         <Text>Error :( {JSON.stringify(error)}</Text>
       </Box>
-    );
-  if (data.price === null || data.price === undefined) return <p>NODATA</p>;
-  const priceData: PriceType = data.price;
+    )
+  if (data.price === null || data.price === undefined) return <p>NODATA</p>
+  const priceData: PriceType = data.price
 
   return (
     <Link to={`/${ticker}`}>
-      <Box animation="fadeIn" pad="small" background="light-2" direction="row" align="center" className="sideBarItem">
+      <Box
+        animation="fadeIn"
+        pad="small"
+        direction="row"
+        align="center"
+        onClick={() => {}} // Just for hoverIndicator
+        background={index ? `light-${1 + (index % 2)}` : undefined}
+        hoverIndicator
+      >
         <Box flex>
           <Text size="large" weight="bold">
             {priceData.symbol}
@@ -55,27 +65,59 @@ const SideBarItem: React.FC<SideBarItemProps> = (props) => {
         </Box>
       </Box>
     </Link>
-  );
-};
+  )
+}
 
 const SideBar = () => {
-  const [activeIndexArray, setActiveIndexArray] = useState<number>(0);
-  const handlePanelClick = (clickedIndexAsArray: number[]) => {
-    const [clickedIndex] = clickedIndexAsArray;
-    if (clickedIndex !== undefined) setActiveIndexArray(clickedIndex);
-    console.log({ clickedIndex });
-  };
+  const [language, setLanguage] = useLanguageContext()
   return (
-    <Accordion activeIndex={activeIndexArray} onActive={handlePanelClick} style={{ borderBottom: "0" }}>
-      <AccordionPanel label="Stocks">
-        <SideBarItem ticker="TSLA" />
-        <SideBarItem ticker="MSFT" />
-        <SideBarItem ticker="AAPL" />
-        <SideBarItem ticker="CPNG" />
-        <SideBarItem ticker="SPYG" />
-      </AccordionPanel>
-    </Accordion>
-  );
-};
+    <Box>
+      <GSidebar
+        elevation="small"
+        pad="none"
+        gap="none"
+        background="brand"
+        round="small"
+        header={
+          <Box pad="small">
+            <Text textAlign="center" weight="bold" size="medium">
+              <Translation text={{ en: "Popular Stocks", kr: "인기주식종목" }} />
+            </Text>
+          </Box>
+        }
+        footer={
+          <Box direction="row" align="center" gap="small" justify="center">
+            <Language />
+            <Menu
+              style={{ wordBreak: "keep-all" }}
+              label={language === "en" ? "English" : "한국어"}
+              items={[
+                {
+                  label: "English",
+                  onClick: () => {
+                    setLanguage("en")
+                  },
+                  background: "white",
+                },
+                {
+                  label: "한국어",
+                  onClick: () => {
+                    setLanguage("kr")
+                  },
+                },
+              ]}
+            />
+          </Box>
+        }
+      >
+        <Box background="light-1">
+          {["TSLA", "MSFT", "CPNG", "AAPL", "SPYG"].map((ticker, index) => (
+            <SideBarItem key={index} ticker={ticker} index={index} />
+          ))}
+        </Box>
+      </GSidebar>
+    </Box>
+  )
+}
 
-export default SideBar;
+export default SideBar

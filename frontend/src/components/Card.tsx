@@ -18,7 +18,7 @@ export const Card: React.FC<BoxTypes> = (props) => {
 }
 export const CardHeader: React.FC<BoxTypes> = (props) => {
   return (
-    <GCardHeader pad={pad} {...props}>
+    <GCardHeader pad={pad} background="brand" direction="row" gap="small" justify="start" {...props}>
       {props.children}
     </GCardHeader>
   )

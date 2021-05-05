@@ -5,6 +5,7 @@ import { HistoryType } from "types/QueryDataType"
 import { HistoryLineChartOptions } from "etc/chartOptions"
 import { useState } from "react"
 import { ChartDataType } from "types/ChartDataType"
+import { parseDate, MS_IN_A_DAY } from "etc/smallFunctions"
 
 const GET_HISTORY_BY_TICKER = gql`
   query historyByTicker($ticker: String, $from: String, $to: String, $period: String) {
@@ -16,18 +17,6 @@ const GET_HISTORY_BY_TICKER = gql`
 `
 
 type rangeType = 7 | 30 | 90 | 365 | 1825
-
-const parseDate = (inputDate: any) => {
-  let dateObject = new Date(inputDate)
-  const year = dateObject.getFullYear()
-  let month: string | number = dateObject.getMonth() + 1
-  month = month < 10 ? "0" + month : "" + month
-  let date: string | number = dateObject.getDate()
-  date = date < 10 ? "0" + date : date
-  return `${year}-${month}-${date}`
-}
-
-const MS_IN_A_DAY = 60 * 60 * 24 * 1000 // milisecondes in a day
 
 type LineChartProps = {
   ticker: string
@@ -41,7 +30,6 @@ const LineChart: React.FC<LineChartProps> = (props) => {
     variables: {
       ticker,
       from: parseDate(Date.now() - range * MS_IN_A_DAY),
-      to: parseDate(Date.now()),
       period: "d",
     },
   })

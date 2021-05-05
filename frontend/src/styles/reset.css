@@ -3,8 +3,27 @@ body {
   padding: 0;
 }
 
+@font-face {
+  font-family: "GmarketSansMedium";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  unicode-range: U+AC00- U+D7A3;
+}
+
+/* 유니코드 범위
+영문 (대문자) : U+0041-005A
+영문 (소문자) : U+0061-007A
+숫자 : U+0030-0039
+한글 : U+AC00-U+D7A3 */
+
+body {
+  font-family: "Montserrat", "GmarketSansMedium", "sans-serif";
+}
+
 a {
   text-decoration: none;
+  color: inherit;
 }
 .stockPriceCard__tableRow {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -15,16 +34,15 @@ a {
 .stockPriceCard .stockPriceCard__tableCell {
   padding: 6px 0;
 }
-.sideBarItem {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-.sideBarItem:last-child {
-  border-bottom: none;
-}
+
+/* .sideBarItem {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1); 
+} */
 
 #searchBar__form {
   width: 0;
   transition: width 0.2s ease-in-out;
+  overflow: hidden;
 }
 #searchBar__form.focused {
   width: 100%;

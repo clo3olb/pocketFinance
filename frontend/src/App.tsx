@@ -7,6 +7,7 @@ import PageStockDetail from "pages/StockDetail"
 import SideBar from "components/SideBar"
 import customTheme from "customTheme"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import { TranslationContextProvider } from "components/Translation"
 
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client"
 import PageSearch from "pages/Search"
@@ -24,30 +25,28 @@ const App = () => {
   return (
     <Grommet background="light-1" theme={customTheme} className="App" full>
       <ApolloProvider client={client}>
-        <Router>
-          <Header />
+        <TranslationContextProvider>
           <ResponsiveContext.Consumer>
             {(size) => (
-              <Container direction={size !== "small" ? "row" : "column"} gap="medium">
-                {/* Main Column Begins*/}
-                <Box flex gap="medium">
-                  <Switch>
-                    <Route path="/" exact component={PageHome} />
-                    <Route path="/search/:searchKeyword" component={PageSearch} />
-                    <Route path="/search" component={PageSearch} />
-                    <Route path="/:ticker" component={PageStockDetail} />
-                  </Switch>
-                </Box>
-                {/* Main Column Ends */}
-
-                {/* Side Column */}
-                <Box width={size !== "small" ? "small" : ""}>
-                  <SideBar />
-                </Box>
-              </Container>
+              <Router>
+                <Header />
+                <Container direction={size !== "small" ? "row" : "column"} gap="medium">
+                  <Box flex gap="medium">
+                    <Switch>
+                      <Route path="/" exact component={PageHome} />
+                      <Route path="/search/:searchKeyword" component={PageSearch} />
+                      <Route path="/search" component={PageSearch} />
+                      <Route path="/:ticker" component={PageStockDetail} />
+                    </Switch>
+                  </Box>
+                  <Box width={size !== "small" ? "small" : ""}>
+                    <SideBar />
+                  </Box>
+                </Container>
+              </Router>
             )}
           </ResponsiveContext.Consumer>
-        </Router>
+        </TranslationContextProvider>
       </ApolloProvider>
     </Grommet>
   )

@@ -1,56 +1,62 @@
-import { ChangeEventHandler, useEffect, useRef, useState } from "react";
-import Container from "components/Container";
-import { Box, TextInput, Form, ResponsiveContext } from "grommet";
-import { FormSearch } from "grommet-icons";
-import { useHistory, useLocation } from "react-router-dom";
+import { ChangeEventHandler, useEffect, useRef, useState } from "react"
+import Container from "components/Container"
+import { Box, TextInput, Form, ResponsiveContext } from "grommet"
+import { FormSearch } from "grommet-icons"
+import { useHistory, useLocation } from "react-router-dom"
 
 const Logo = () => {
-  const history = useHistory();
+  const history = useHistory()
   const handleLogoClick = () => {
-    history.push("/");
-  };
+    history.push("/")
+  }
   return (
     <Box direction="row" align="center" onClick={handleLogoClick}>
       <strong style={{ fontWeight: 900 }}>Stock</strong>Price
     </Box>
-  );
-};
+  )
+}
 
 const SearchBar = () => {
-  const [searchKeyword, setSearchKeyword] = useState("");
-  const [focused, setFocused] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const history = useHistory();
-  const location = useLocation();
+  const [searchKeyword, setSearchKeyword] = useState("")
+  const [focused, setFocused] = useState(false)
+  const inputRef = useRef<HTMLInputElement>(null)
+  const history = useHistory()
+  const location = useLocation()
 
   useEffect(() => {
-    if (searchKeyword) history.push(`/search/${searchKeyword}`);
-  }, [searchKeyword, history]);
+    if (searchKeyword) history.push(`/search/${searchKeyword}`)
+  }, [searchKeyword, history])
 
   useEffect(() => {
     if (location.pathname.split("/")[1] !== "search") {
-      setFocused(false);
-      setSearchKeyword("");
+      setFocused(false)
+      setSearchKeyword("")
     }
-  }, [location]);
+  }, [location])
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    setSearchKeyword(event.target.value);
-  };
+    setSearchKeyword(event.target.value)
+  }
   const handleIconClick = () => {
-    setFocused(!focused);
-    if (inputRef && inputRef.current) inputRef.current.focus();
-  };
+    setFocused(!focused)
+    if (inputRef && inputRef.current) inputRef.current.focus()
+  }
 
   return (
     <Box flex fill direction="row" align="center" justify="end">
       <FormSearch onClick={handleIconClick} style={{ cursor: "pointer" }} />
       <Form id="searchBar__form" className={focused ? "focused" : ""}>
-        <TextInput ref={inputRef} plain placeholder="Search..." value={searchKeyword} onChange={handleChange} />
+        <TextInput
+          ref={inputRef}
+          plain
+          placeholder="Search by ticker..."
+          value={searchKeyword}
+          onChange={handleChange}
+        />
       </Form>
     </Box>
-  );
-};
+  )
+}
 
 const Header = () => {
   return (
@@ -72,7 +78,7 @@ const Header = () => {
         </Container>
       )}
     </ResponsiveContext.Consumer>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

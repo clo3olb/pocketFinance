@@ -1,28 +1,16 @@
 import React from "react"
-import { useQuery, gql } from "@apollo/client"
+import { useQuery } from "@apollo/client"
 import { Card, CardHeader, CardBody, CardFooter } from "components/Card"
-import { Heading, Box, Text, TableRow, TableBody, TableCell, Table, Spinner } from "grommet"
-// import { Add } from "grommet-icons";
+import { Heading, Box, Text, TableRow, TableBody, TableCell, Table } from "grommet"
+import { CaretUpFill, CaretDownFill } from "grommet-icons"
 import HistoryLineChart from "components/HistoryLineChart"
 import { PriceType } from "types/QueryDataType"
-import Message from "./Message"
+import Translation from "./Translation"
+import { GET_PRICE_BY_TICKER } from "etc/graphQlQueries"
 
-const GET_PRICE_BY_TICKER = gql`
-  query priceByTicker($ticker: String) {
-    price: priceByTicker(ticker: $ticker) {
-      symbol
-      regularMarketPreviousClose
-      regularMarketPrice
-      regularMarketDayLow
-      regularMarketDayHigh
-      regularMarketDayLow
-      regularMarketOpen
-      regularMarketChange
-      regularMarketChangePercent
-      longName
-    }
-  }
-`
+import LoadingSpinner from "./LoadingSpinner"
+import ErrorMessage from "./ErrorMessage"
+import NoDataMessage from "./NoDataMessage"
 
 type StockPriceCardProps = {
   ticker: string
@@ -35,15 +23,9 @@ const StockPriceCard: React.FC<StockPriceCardProps> = (props) => {
     variables: { ticker },
   })
 
-  if (loading)
-    return (
-      <Box flex justify="center" align="center">
-        <Spinner size="large" />
-      </Box>
-    )
-  if (error) return <Message size="large" type="error" message="Error :(" />
-  if (data.price === null || data.price === undefined)
-    return <Message size="large" type="unknown" message="No Data Found" />
+  if (loading) return <LoadingSpinner />
+  if (error) return <ErrorMessage />
+  if (data.price === null || data.price === undefined) return <NoDataMessage />
 
   const priceData: PriceType = data.price
   const { regularMarketChange: change, regularMarketChangePercent: changePercent } = priceData
@@ -62,14 +44,22 @@ const StockPriceCard: React.FC<StockPriceCardProps> = (props) => {
         </Box>
       </CardHeader>
       <CardBody>
-        <Box margin={{ bottom: "medium" }} direction="row" align="end" gap="small" wrap>
-          <Text weight="bold" size="2xl">
-            ${priceData.regularMarketPrice}
-          </Text>
-          <Text size="large" color={isChangePositive ? "green" : "red"}>
-            {("$" + Number(change).toFixed(2).toString()).replace("$-", "-$")}
-            {`(${(changePercent * 100).toFixed(2)}%)`}
-          </Text>
+        <Box margin={{ bottom: "medium" }} align="start" gap="small" wrap>
+          <Box direction="row" gap="small" align="end">
+            <Text weight="bold" size="2xl">
+              {priceData.regularMarketPrice}
+            </Text>
+            <Text size="large" color="dark-4" weight="bold">
+              {priceData.currency}
+            </Text>
+          </Box>
+          <Box direction="row" align="center">
+            {isChangePositive ? <CaretUpFill color="green" /> : <CaretDownFill color="red" />}
+            <Text size="large" color={isChangePositive ? "green" : "red"}>
+              {change.toFixed(2)}
+              {`(${(changePercent * 100).toFixed(2)}%)`}
+            </Text>
+          </Box>
         </Box>
         <HistoryLineChart ticker={ticker} />
       </CardBody>
@@ -78,21 +68,17 @@ const StockPriceCard: React.FC<StockPriceCardProps> = (props) => {
           <Table>
             <TableBody>
               {[
-                ["Open", priceData.regularMarketOpen],
-                ["Close", priceData.regularMarketPreviousClose],
-                ["High", priceData.regularMarketDayHigh],
-                ["Low", priceData.regularMarketDayLow],
-              ].map((row) => (
-                <TableRow key={row[0]} className="stockPriceCard__tableRow">
+                [<Translation text={{ en: "Open", kr: "시가" }} />, priceData.regularMarketOpen],
+                [<Translation text={{ en: "Close", kr: "종가" }} />, priceData.regularMarketPreviousClose],
+                [<Translation text={{ en: "High", kr: "고가" }} />, priceData.regularMarketDayHigh],
+                [<Translation text={{ en: "Low", kr: "저가" }} />, priceData.regularMarketDayLow],
+              ].map((row, i) => (
+                <TableRow key={i} className="stockPriceCard__tableRow">
                   <TableCell className="stockPriceCard__tableCell">
-                    <Text size="small">
-                      <strong>{row[0]}</strong>
-                    </Text>
+                    <Text weight="bold">{row[0]}</Text>
                   </TableCell>
                   <TableCell justify="end" className="stockPriceCard__tableCell">
-                    <Text textAlign="end" size="small">
-                      {row[1]}
-                    </Text>
+                    <Text textAlign="end">{row[1]}</Text>
                   </TableCell>
                 </TableRow>
               ))}

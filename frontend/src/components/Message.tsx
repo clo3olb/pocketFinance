@@ -5,14 +5,19 @@ import { Card, CardHeader } from "components/Card"
 type MessageType = "error" | "warning" | "ok" | "unknown"
 type MessageProps = {
   type?: MessageType
-  message: string
+  message: string | React.ReactNode
   size?: "large"
 }
 
 const Message: React.FC<MessageProps> = ({ type = "unknown", message, size }) => {
   return (
-    <Card background={`status-${type}`}>
-      <CardHeader pad={size ? size : "small"} justify="start" direction={size === "large" ? "column" : "row"}>
+    <Card animation={["fadeIn", "slideUp"]}>
+      <CardHeader
+        pad={size ? size : "small"}
+        justify="start"
+        direction={size === "large" ? "column" : "row"}
+        background={`status-${type}`}
+      >
         {type === "error" && <StatusCritical size={size} />}
         {type === "warning" && <Alert size={size} />}
         {type === "ok" && <StatusGood size={size} />}

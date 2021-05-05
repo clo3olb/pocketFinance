@@ -10,7 +10,14 @@ const typeDefs = gql`
       to: String
       period: String
     ): [History]
+    dividendHistoryByTicker(
+      ticker: String
+      from: String
+    ): [DividendHistory]
     earningsByTicker(ticker: String): Earnings
+    autoComplete(query: String): AutoComplete
+    recommendationsBySymbol(ticker: String): Recommendations
+    calendarEventsByTicker(ticker: String): CalendarEvents
   }
 `;
 

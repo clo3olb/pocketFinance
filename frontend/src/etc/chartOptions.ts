@@ -10,18 +10,15 @@ export const HistoryLineChartOptions: ChartOptions = {
       intersect: false,
       displayColors: false,
       titleFont: {
-        size: 10,
+        size: 12,
       },
       bodyFont: {
         weight: "bold",
         size: 16,
       },
       bodyColor: "#6FFFAF",
-      callbacks: {
-        label: function (this, data) {
-          return "$" + data.formattedValue
-        },
-      },
+      bodyAlign: "center",
+      titleAlign: "center",
     },
   },
   elements: {
@@ -64,6 +61,7 @@ export const EarningsBarChartOptions: ChartOptions = {
       },
     },
     tooltip: {
+      usePointStyle: true,
       intersect: false,
       bodySpacing: 5,
       callbacks: {
@@ -76,6 +74,12 @@ export const EarningsBarChartOptions: ChartOptions = {
           return "Error"
         },
       },
+    },
+  },
+  datasets: {
+    bar: {
+      barPercentage: 1,
+      categoryPercentage: 0.4,
     },
   },
 

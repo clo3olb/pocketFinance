@@ -3,21 +3,21 @@ const yahooFinance = require("yahoo-finance");
 
 const typeDefs = gql`
   type SummaryDetail {
-    maxAge: String
+    maxAge: Int
     priceHint: String
-    previousClose: String
-    open: String
-    dayLow: String
-    dayHigh: String
-    regularMarketPreviousClose: String
-    regularMarketOpen: String
-    regularMarketDayLow: String
-    regularMarketDayHigh: String
-    dividendRate: String
-    dividendYield: String
-    exDividendDate: String
+    previousClose: Float
+    open: Float
+    dayLow: Float
+    dayHigh: Float
+    regularMarketPreviousClose: Float
+    regularMarketOpen: Float
+    regularMarketDayLow: Float
+    regularMarketDayHigh: Float
+    dividendRate: Float
+    dividendYield: Float
+    exDividendDate: Float
     payoutRatio: String
-    fiveYearAvgDividendYield: String
+    fiveYearAvgDividendYield: Float
     beta: String
     trailingPE: String
     forwardPE: String
@@ -31,13 +31,13 @@ const typeDefs = gql`
     bidSize: String
     askSize: String
     marketCap: String
-    fiftyTwoWeekLow: String
-    fiftyTwoWeekHigh: String
+    fiftyTwoWeekLow: Float
+    fiftyTwoWeekHigh: Float
     priceToSalesTrailing12Months: String
     fiftyDayAverage: String
     twoHundredDayAverage: String
-    trailingAnnualDividendRate: String
-    trailingAnnualDividendYield: String
+    trailingAnnualDividendRate: Float
+    trailingAnnualDividendYield: Float
   }
 `;
 

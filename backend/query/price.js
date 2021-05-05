@@ -31,7 +31,7 @@ const typeDefs = gql`
     exchangeName: String
     marketState: String
     quoteType: String
-    symbol: String
+    symbol: ID
     underlyingSymbol: String
     shortName: String
     longName: String

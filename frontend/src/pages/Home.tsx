@@ -1,7 +1,7 @@
-import StockPriceCard from "components/StockPriceCard";
+import StockPriceCard from "components/StockPriceCard"
 
 const PageHome = () => {
-  return <StockPriceCard ticker="SPYG" />;
-};
+  return <StockPriceCard ticker="TSLA" />
+}
 
-export default PageHome;
+export default PageHome

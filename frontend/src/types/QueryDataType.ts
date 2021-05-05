@@ -37,41 +37,41 @@ export type PriceType = {
 }
 
 export type SummaryDetailType = {
-  maxAge: string
-  preMarketChangePercent: string
-  preMarketChange: string
-  preMarketTime: string
-  preMarketPrice: string
-  preMarketSource: string
-  postMarketChangePercent: string
-  postMarketChange: string
-  postMarketTime: string
-  postMarketPrice: string
-  postMarketSource: string
-  regularMarketChangePercent: string
-  regularMarketChange: string
-  regularMarketTime: string
+  maxAge: number
   priceHint: string
-  regularMarketPrice: string
-  regularMarketDayHigh: string
-  regularMarketDayLow: string
+  previousClose: number
+  open: number
+  dayLow: number
+  dayHigh: number
+  regularMarketPreviousClose: number
+  regularMarketOpen: number
+  regularMarketDayLow: number
+  regularMarketDayHigh: number
+  dividendRate: number
+  dividendYield: number
+  exDividendDate: number
+  payoutRatio: string
+  fiveYearAvgDividendYield: number
+  beta: string
+  trailingPE: string
+  forwardPE: string
+  volume: string
   regularMarketVolume: string
+  averageVolume: string
+  averageVolume10days: string
   averageDailyVolume10Day: string
-  averageDailyVolume3Month: string
-  regularMarketPreviousClose: string
-  regularMarketSource: string
-  regularMarketOpen: string
-  exchange: string
-  exchangeName: string
-  marketState: string
-  quoteType: string
-  symbol: string
-  underlyingSymbol: string
-  shortName: string
-  longName: string
-  currency: string
-  quoteSourceName: string
-  currencySymbol: string
+  bid: string
+  ask: string
+  bidSize: string
+  askSize: string
+  marketCap: string
+  fiftyTwoWeekLow: number
+  fiftyTwoWeekHigh: number
+  priceToSalesTrailing12Months: string
+  fiftyDayAverage: string
+  twoHundredDayAverage: string
+  trailingAnnualDividendRate: number
+  trailingAnnualDividendYield: number
 }
 
 export type HistoryType = {
@@ -111,3 +111,46 @@ export type EarningsType = {
   financialsChart: FinancialChart
   financialCurrency: string
 }
+
+type AutoCompleteItem = {
+  symbol: string
+  name: string
+  exch: string
+  type: string
+  exchDisp: string
+  typeDisp: string
+}
+
+export type AutoComplete = {
+  query: String
+  result: AutoCompleteItem[]
+}
+
+export type RecommendationsType = {
+  symbol: string
+  recommendedSymbols: {
+    symbol: string
+    score: number
+  }[]
+}
+
+export type CalendarEventsType = {
+  maxAge: number
+  earnings: {
+    earningsDate: number
+    earningsAverage: number
+    earningsLow: number
+    earningsHigh: number
+    revenueAverage: number
+    revenueLow: number
+    revenueHigh: number
+  }
+  exDividendDate: number
+  dividendDate: number
+}
+
+export type DividendHistoryType = {
+  date: number
+  dividends: number
+  symbol: string
+}[]
