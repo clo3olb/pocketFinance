@@ -57,7 +57,7 @@ const LineChart: React.FC<LineChartProps> = (props) => {
         data: histories.map((history: HistoryType) => history.close), // [12, 19, 3, 5, 2, 3],
         fill: false,
         backgroundColor: "#000000",
-        borderColor: "#6c6c6c", // color of the line
+        borderColor: "#5bdda4", // color of the line
       },
     ],
   }
@@ -80,7 +80,7 @@ const HistoryLineChart: React.FC<HistoryLineChartProps> = (props) => {
   return (
     <Box gap="medium">
       <LineChart ticker={ticker} range={range} />
-      <Box direction="row" gap="small" justify="center">
+      <Box direction="row" gap="xsmall" justify="center">
         {([
           ["1W", 7],
           ["1M", 30],

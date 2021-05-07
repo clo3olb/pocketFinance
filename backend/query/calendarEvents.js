@@ -62,11 +62,3 @@ const resolvers = {
 };
 
 module.exports = { typeDefs, resolvers };
-
-(async () => {
-  const data = await yahooFinance.quote({
-    symbol: "aapl",
-    modules: ["calendarEvents"],
-  });
-  console.log(data);
-})();

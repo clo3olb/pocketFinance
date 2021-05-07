@@ -1,24 +1,23 @@
 import React from "react"
-import {
-  Card as GCard,
-  CardHeader as GCardHeader,
-  CardBody as GCardBody,
-  CardFooter as GCardFooter,
-  BoxTypes,
-} from "grommet"
+import { Card as GCard, CardHeader as GCardHeader, CardBody as GCardBody, CardFooter as GCardFooter, BoxTypes, ResponsiveContext } from "grommet"
 
 const pad = "medium"
 
 export const Card: React.FC<BoxTypes> = (props) => {
   return (
-    <GCard animation="fadeIn" background="#fcfcfc" {...props}>
-      {props.children}
-    </GCard>
+    <ResponsiveContext.Consumer>
+      {(size) => (
+        <GCard animation="fadeIn" background="#fcfcfc" round={size !== "small" ? "small" : "none"} {...props}>
+          {props.children}
+        </GCard>
+      )}
+    </ResponsiveContext.Consumer>
   )
 }
+
 export const CardHeader: React.FC<BoxTypes> = (props) => {
   return (
-    <GCardHeader pad={pad} background="brand" direction="row" gap="small" justify="start" {...props}>
+    <GCardHeader pad={pad} direction="row" gap="small" justify="start" {...props}>
       {props.children}
     </GCardHeader>
   )

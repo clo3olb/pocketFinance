@@ -1,15 +1,17 @@
 import React from "react"
 import { useQuery } from "@apollo/client"
-import { Card, CardHeader, CardBody, CardFooter } from "components/Card"
+import { Card, CardHeader, CardBody } from "components/Card"
 import { Box, Text } from "grommet"
-import { Alert, Group, CaretUpFill, CaretDownFill } from "grommet-icons"
-import Translation from "./Translation"
 import { GET_RECOMMENDATIONS_BY_TICKER, GET_PRICE_BY_TICKER } from "etc/graphQlQueries"
-import LoadingSpinner from "./LoadingSpinner"
-import ErrorMessage from "./ErrorMessage"
-import NoDataMessage from "./NoDataMessage"
+import LoadingSpinner from "components/LoadingSpinner"
+import ErrorMessage from "components/ErrorMessage"
+import NoDataMessage from "components/NoDataMessage"
 import { RecommendationsType, PriceType } from "types/QueryDataType"
 import { Link } from "react-router-dom"
+import StockDetailCardTemplate from "template/StockDetailCardTemplate"
+import { CaretDownFill, CaretUpFill, Group } from "grommet-icons"
+
+const IconWrapper = () => <Group color="neutral-1" />
 
 type RecommendProps = {
   ticker: string
@@ -39,6 +41,8 @@ const Recommend: React.FC<RecommendProps> = ({ ticker }) => {
         hoverIndicator
         gap="none"
         fill
+        background="light-1"
+        round="small"
       >
         <CardHeader pad="small" direction="column" justify="start" align="start" gap="none" background="light-2">
           <Text size="xlarge" weight="bold">
@@ -74,30 +78,26 @@ const StockRecommendationCard: React.FC<StockRecommendationCardProps> = (props) 
 
   if (loading) return <LoadingSpinner />
   if (error) return <ErrorMessage />
-  if (data.recommendations === null || data.recommendations === undefined) return <NoDataMessage />
+  if (data.recommendations === null || data.recommendations === undefined)
+    return (
+      <StockDetailCardTemplate
+        header={{ icon: <IconWrapper />, title: { en: "People Also Own", kr: "사람들이 함께 본 주식" } }}
+        body={{ pad: "none" }}
+      >
+        <NoDataMessage />
+      </StockDetailCardTemplate>
+    )
 
   const recommendationsData: RecommendationsType = data.recommendations
   return (
-    <Card animation={["slideUp", "fadeIn"]}>
-      <CardHeader>
-        <Group />
-        <Text weight="bold" size="large">
-          <Translation text={{ en: "People Also Own", kr: "사람들이 함께 본 주식" }} />
-        </Text>
-      </CardHeader>
-      <CardBody direction="row" overflow={{ horizontal: "scroll" }} gap="medium">
+    <StockDetailCardTemplate header={{ icon: <IconWrapper />, title: { en: "People Also Own", kr: "사람들이 함께 본 주식" } }} body={{ pad: "none" }}>
+      <Box direction="row" overflow={{ horizontal: "scroll" }} gap="medium" pad="medium">
         {recommendationsData.recommendedSymbols.map((item) => (
           <Recommend key={item.symbol} ticker={item.symbol} />
         ))}
         <Box></Box>
-      </CardBody>
-      <CardFooter justify="start">
-        <Alert />
-        <Text>
-          <Translation text={{ en: "It's not an investment recommendation.", kr: "위 자료는 종목추천이 아닙니다." }} />
-        </Text>
-      </CardFooter>
-    </Card>
+      </Box>
+    </StockDetailCardTemplate>
   )
 }
 

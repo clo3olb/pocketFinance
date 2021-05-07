@@ -8,6 +8,7 @@ const autoComplete = require("./query/autoComplete");
 const recommendations = require("./query/recommendations");
 const dividendHistory = require("./query/dividendHistory");
 const calendarEvents = require("./query/calendarEvents");
+const news = require("./query/news");
 
 const typeDefs = [
   queries,
@@ -19,6 +20,7 @@ const typeDefs = [
   recommendations.typeDefs,
   dividendHistory.typeDefs,
   calendarEvents.typeDefs,
+  news.typeDefs,
 ];
 const resolvers = [
   price.resolvers,
@@ -29,6 +31,7 @@ const resolvers = [
   recommendations.resolvers,
   dividendHistory.resolvers,
   calendarEvents.resolvers,
+  news.resolvers,
 ];
 
 const server = new ApolloServer({

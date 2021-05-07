@@ -1,4 +1,4 @@
-import { Box, Text, Sidebar as GSidebar, Menu } from "grommet"
+import { Box, Text, Sidebar as GSidebar, Menu, ResponsiveContext } from "grommet"
 import { PriceType } from "types/QueryDataType"
 import { useQuery, gql } from "@apollo/client"
 import { Link } from "react-router-dom"
@@ -53,9 +53,7 @@ const SideBarItem: React.FC<SideBarItemProps> = ({ ticker, index }) => {
           <Text size="large" weight="bold">
             {priceData.symbol}
           </Text>
-          <Text size="xsmall">
-            {priceData.longName.length > 17 ? priceData.longName.slice(0, 16) + "..." : priceData.longName}
-          </Text>
+          <Text size="xsmall">{priceData.longName.length > 17 ? priceData.longName.slice(0, 16) + "..." : priceData.longName}</Text>
         </Box>
         <Box align="end">
           <Text weight="bold" size="small">
@@ -72,50 +70,55 @@ const SideBar = () => {
   const [language, setLanguage] = useLanguageContext()
   return (
     <Box>
-      <GSidebar
-        elevation="small"
-        pad="none"
-        gap="none"
-        background="brand"
-        round="small"
-        header={
-          <Box pad="small">
-            <Text textAlign="center" weight="bold" size="medium">
-              <Translation text={{ en: "Popular Stocks", kr: "인기주식종목" }} />
-            </Text>
-          </Box>
-        }
-        footer={
-          <Box direction="row" align="center" gap="small" justify="center">
-            <Language />
-            <Menu
-              style={{ wordBreak: "keep-all" }}
-              label={language === "en" ? "English" : "한국어"}
-              items={[
-                {
-                  label: "English",
-                  onClick: () => {
-                    setLanguage("en")
-                  },
-                  background: "white",
-                },
-                {
-                  label: "한국어",
-                  onClick: () => {
-                    setLanguage("kr")
-                  },
-                },
-              ]}
-            />
-          </Box>
-        }
-      >
-        <Box background="light-1">
-          {["TSLA", "MSFT", "CPNG", "AAPL", "SPYG"].map((ticker, index) => (
-            <SideBarItem key={index} ticker={ticker} index={index} />
-          ))}
-        </Box>
-      </GSidebar>
+      <ResponsiveContext.Consumer>
+        {(size) => (
+          <GSidebar
+            elevation="small"
+            pad="none"
+            gap="none"
+            background="brand"
+            round={size !== "small" ? "small" : "none"}
+            header={
+              <Box pad="small">
+                <Text textAlign="center" weight="bold" size="medium" color="neutral-1">
+                  <Translation text={{ en: "Popular Stocks", kr: "인기주식종목" }} />
+                </Text>
+              </Box>
+            }
+            footer={
+              <Box direction="row" align="center" gap="small" justify="center">
+                <Language color="neutral-1" />
+                <Menu
+                  color="neutral-1"
+                  style={{ wordBreak: "keep-all" }}
+                  label={language === "en" ? "English" : "한국어"}
+                  items={[
+                    {
+                      label: "English",
+                      onClick: () => {
+                        setLanguage("en")
+                      },
+                      background: "white",
+                    },
+                    {
+                      label: "한국어",
+                      onClick: () => {
+                        setLanguage("kr")
+                      },
+                    },
+                  ]}
+                />
+              </Box>
+            }
+          >
+            <Box background="light-1">
+              {["TSLA", "MSFT", "CPNG", "AAPL", "SPYG"].map((ticker, index) => (
+                <SideBarItem key={index} ticker={ticker} index={index} />
+              ))}
+            </Box>
+          </GSidebar>
+        )}
+      </ResponsiveContext.Consumer>
     </Box>
   )
 }

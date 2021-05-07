@@ -1,8 +1,9 @@
 import { ChangeEventHandler, useEffect, useRef, useState } from "react"
 import Container from "components/Container"
-import { Box, TextInput, Form, ResponsiveContext } from "grommet"
+import { Box, Text, TextInput, Form, ResponsiveContext } from "grommet"
 import { FormSearch } from "grommet-icons"
 import { useHistory, useLocation } from "react-router-dom"
+import globalVariable from "etc/globalVariable"
 
 const Logo = () => {
   const history = useHistory()
@@ -11,7 +12,9 @@ const Logo = () => {
   }
   return (
     <Box direction="row" align="center" onClick={handleLogoClick}>
-      <strong style={{ fontWeight: 900 }}>Stock</strong>Price
+      <Text color="neutral-1">
+        <strong style={{ fontWeight: 900 }}>Stock</strong>Price
+      </Text>
     </Box>
   )
 }
@@ -44,15 +47,9 @@ const SearchBar = () => {
 
   return (
     <Box flex fill direction="row" align="center" justify="end">
-      <FormSearch onClick={handleIconClick} style={{ cursor: "pointer" }} />
+      <FormSearch color="neutral-1" onClick={handleIconClick} style={{ cursor: "pointer" }} />
       <Form id="searchBar__form" className={focused ? "focused" : ""}>
-        <TextInput
-          ref={inputRef}
-          plain
-          placeholder="Search by ticker..."
-          value={searchKeyword}
-          onChange={handleChange}
-        />
+        <TextInput ref={inputRef} plain placeholder="Search by ticker..." value={searchKeyword} onChange={handleChange} />
       </Form>
     </Box>
   )

@@ -5,7 +5,7 @@ import Header from "components/Header"
 import PageHome from "pages/Home"
 import PageStockDetail from "pages/StockDetail"
 import SideBar from "components/SideBar"
-import customTheme from "customTheme"
+import { lightTheme, darkTheme } from "etc/customTheme"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import { TranslationContextProvider } from "components/Translation"
 
@@ -23,14 +23,18 @@ const client = new ApolloClient({
 
 const App = () => {
   return (
-    <Grommet background="light-1" theme={customTheme} className="App" full>
+    <Grommet theme={lightTheme} className="App" full>
       <ApolloProvider client={client}>
         <TranslationContextProvider>
           <ResponsiveContext.Consumer>
             {(size) => (
               <Router>
                 <Header />
-                <Container direction={size !== "small" ? "row" : "column"} gap="medium">
+                <Container
+                  direction={size !== "small" ? "row" : "column"}
+                  gap="medium"
+                  pad={size !== "small" ? "medium" : { top: "medium", bottom: "none", left: "none", right: "none" }}
+                >
                   <Box flex gap="medium">
                     <Switch>
                       <Route path="/" exact component={PageHome} />

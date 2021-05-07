@@ -53,15 +53,15 @@ export type SummaryDetailType = {
   payoutRatio: string
   fiveYearAvgDividendYield: number
   beta: string
-  trailingPE: string
-  forwardPE: string
-  volume: string
-  regularMarketVolume: string
-  averageVolume: string
-  averageVolume10days: string
-  averageDailyVolume10Day: string
-  bid: string
-  ask: string
+  trailingPE: number
+  forwardPE: number
+  volume: number
+  regularMarketVolume: number
+  averageVolume: number
+  averageVolume10days: number
+  averageDailyVolume10Day: number
+  bid: number
+  ask: number
   bidSize: string
   askSize: string
   marketCap: string
@@ -153,4 +153,13 @@ export type DividendHistoryType = {
   date: number
   dividends: number
   symbol: string
+}[]
+
+export type NewsType = {
+  uuid: string
+  title: string
+  publisher: string
+  link: string
+  providerPublishTime: string
+  type: string
 }[]

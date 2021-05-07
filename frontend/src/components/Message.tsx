@@ -7,17 +7,13 @@ type MessageProps = {
   type?: MessageType
   message: string | React.ReactNode
   size?: "large"
+  noRound?: boolean
 }
 
-const Message: React.FC<MessageProps> = ({ type = "unknown", message, size }) => {
+const Message: React.FC<MessageProps> = ({ type = "unknown", message, size, noRound }) => {
   return (
-    <Card animation={["fadeIn", "slideUp"]}>
-      <CardHeader
-        pad={size ? size : "small"}
-        justify="start"
-        direction={size === "large" ? "column" : "row"}
-        background={`status-${type}`}
-      >
+    <Card animation={["fadeIn", "slideUp"]} round={noRound ? "none" : undefined}>
+      <CardHeader pad={size ? size : "medium"} justify="start" direction={size === "large" ? "column" : "row"} background={`status-${type}`}>
         {type === "error" && <StatusCritical size={size} />}
         {type === "warning" && <Alert size={size} />}
         {type === "ok" && <StatusGood size={size} />}

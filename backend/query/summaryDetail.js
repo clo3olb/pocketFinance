@@ -19,11 +19,11 @@ const typeDefs = gql`
     payoutRatio: String
     fiveYearAvgDividendYield: Float
     beta: String
-    trailingPE: String
-    forwardPE: String
-    volume: String
-    regularMarketVolume: String
-    averageVolume: String
+    trailingPE: Float
+    forwardPE: Float
+    volume: Float
+    regularMarketVolume: Float
+    averageVolume: Float
     averageVolume10days: String
     averageDailyVolume10Day: String
     bid: String

@@ -1,11 +1,11 @@
 export const parseDate = (inputDate: any) => {
   if (inputDate === null || inputDate === undefined || inputDate === 0) return "-"
-  let dateObject = new Date(inputDate)
+  let dateObject = new Date(inputDate * 1)
   const year = dateObject.getFullYear()
   let month: string | number = dateObject.getMonth() + 1
-  month = month < 10 ? "0" + month : "" + month
+  month = month < 10 ? `0${month}` : `${month}`
   let date: string | number = dateObject.getDate()
-  date = date < 10 ? "0" + date : date
+  date = date < 10 ? `0${date}` : `${date}`
   return `${year}-${month}-${date}`
 }
 
@@ -21,3 +21,9 @@ export const addSign = (number: number | string, sign: string, isChange: boolean
 }
 
 export const MS_IN_A_DAY = 60 * 60 * 24 * 1000 // milisecondes in a day
+
+export const getTimeDifference = (time1: any, time2: any) => {
+  const time1Date = new Date(typeof time1 === "string" ? parseInt(time1) : time1)
+  const time2Date = new Date(typeof time2 === "string" ? parseInt(time2) : time2)
+  return Math.abs((time1Date.getTime() - time2Date.getTime()) / 1000)
+}

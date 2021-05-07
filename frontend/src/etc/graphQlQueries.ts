@@ -15,6 +15,19 @@ export const GET_PRICE_BY_TICKER = gql`
       longName
       currency
     }
+    summary: summaryDetailByTicker(ticker: $ticker) {
+      open
+      dayLow
+      dayHigh
+      trailingPE
+      forwardPE
+      regularMarketVolume
+      averageVolume
+      fiftyTwoWeekLow
+      fiftyTwoWeekHigh
+      fiftyDayAverage
+      twoHundredDayAverage
+    }
   }
 `
 
@@ -91,6 +104,21 @@ export const GET_CALENDAR_EVENTS_BY_TICKER = gql`
   }
 `
 
+export const GET_NEWS_BY_TICKER = gql`
+  query newsByTicker($ticker: String) {
+    news: newsByTicker(ticker: $ticker) {
+      news {
+        uuid
+        title
+        publisher
+        link
+        providerPublishTime
+        type
+      }
+    }
+  }
+`
+
 export const GET_DIVIDENDS_INFORMATION_BY_TICKER = gql`
   query getCalendarEvents($ticker: String, $from: String) {
     calendarEvents: calendarEventsByTicker(ticker: $ticker) {
@@ -119,6 +147,9 @@ export const GET_DIVIDENDS_INFORMATION_BY_TICKER = gql`
       fiveYearAvgDividendYield
       trailingAnnualDividendRate
       trailingAnnualDividendYield
+    }
+    price: priceByTicker(ticker: $ticker) {
+      currency
     }
   }
 `

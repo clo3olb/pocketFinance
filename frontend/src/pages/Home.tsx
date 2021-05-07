@@ -1,4 +1,4 @@
-import StockPriceCard from "components/StockPriceCard"
+import StockPriceCard from "components/stockDetailCards/StockPriceCard"
 
 const PageHome = () => {
   return <StockPriceCard ticker="TSLA" />

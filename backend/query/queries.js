@@ -18,6 +18,7 @@ const typeDefs = gql`
     autoComplete(query: String): AutoComplete
     recommendationsBySymbol(ticker: String): Recommendations
     calendarEventsByTicker(ticker: String): CalendarEvents
+    newsByTicker(ticker: String): News
   }
 `;
 
