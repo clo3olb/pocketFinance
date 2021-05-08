@@ -30,7 +30,6 @@ const StockNewsCard: React.FC<StockNewsCardProps> = ({ ticker }) => {
       </StockDetailCardTemplate>
     )
   const newsData: NewsType = data.news.news
-  console.log(newsData)
 
   return (
     <StockDetailCardTemplate header={{ icon: <IconWrapper />, title: { en: "News", kr: "뉴스" } }}>

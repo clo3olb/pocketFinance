@@ -69,9 +69,7 @@ type StockRecommendationCardProps = {
   ticker: string
 }
 
-const StockRecommendationCard: React.FC<StockRecommendationCardProps> = (props) => {
-  const { ticker } = props
-
+const StockRecommendationCard: React.FC<StockRecommendationCardProps> = ({ ticker }) => {
   const { loading, error, data } = useQuery(GET_RECOMMENDATIONS_BY_TICKER, {
     variables: { ticker },
   })

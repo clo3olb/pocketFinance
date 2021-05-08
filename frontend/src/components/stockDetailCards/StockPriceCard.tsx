@@ -1,7 +1,7 @@
 import React from "react"
 import { useQuery } from "@apollo/client"
 import { Card, CardHeader, CardBody, CardFooter } from "components/Card"
-import { Heading, Box, Text, TableRow, TableBody, TableCell, Table } from "grommet"
+import { Heading, Box, Text } from "grommet"
 import { CaretUpFill, CaretDownFill } from "grommet-icons"
 import HistoryLineChart from "components/stockDetailCards/HistoryLineChart"
 import { PriceType, SummaryDetailType } from "types/QueryDataType"
@@ -11,6 +11,7 @@ import { GET_PRICE_BY_TICKER } from "etc/graphQlQueries"
 import LoadingSpinner from "components/LoadingSpinner"
 import ErrorMessage from "components/ErrorMessage"
 import NoDataMessage from "components/NoDataMessage"
+import { toFixed } from "etc/smallFunctions"
 
 type StockPriceCardProps = {
   ticker: string
@@ -69,23 +70,23 @@ const StockPriceCard: React.FC<StockPriceCardProps> = (props) => {
       <CardFooter>
         <Box flex gap="xsmall">
           {[
-            [<Translation text={{ en: "Open", kr: "시가" }} />, summaryData.open.toFixed(2)],
-            [<Translation text={{ en: "High", kr: "고가" }} />, summaryData.dayHigh.toFixed(2)],
-            [<Translation text={{ en: "Low", kr: "저가" }} />, summaryData.dayLow.toFixed(2)],
+            [<Translation text={{ en: "Open", kr: "시가" }} />, toFixed(summaryData.open, 2)],
+            [<Translation text={{ en: "High", kr: "고가" }} />, toFixed(summaryData.dayHigh, 2)],
+            [<Translation text={{ en: "Low", kr: "저가" }} />, toFixed(summaryData.dayLow, 2)],
             [
               <Translation text={{ en: "52 Weeks Range", kr: "52주 최저-최고" }} />,
-              `${summaryData.fiftyTwoWeekLow.toFixed(2)} - ${summaryData.fiftyTwoWeekHigh.toFixed(2)}`,
+              `${toFixed(summaryData.fiftyTwoWeekLow, 2)} - ${toFixed(summaryData.fiftyTwoWeekHigh, 2)}`,
             ],
-            [<Translation text={{ en: "PE Ratio(TTM)", kr: "PER" }} />, summaryData.trailingPE.toFixed(2)],
+            [<Translation text={{ en: "PE Ratio(TTM)", kr: "PER" }} />, toFixed(summaryData.trailingPE, 2)],
             [<Translation text={{ en: "Volume", kr: "거래량" }} />, summaryData.regularMarketVolume],
           ].map((item, index) => (
-            <>
+            <Box key={index}>
               {index > 0 && <Box border="top"></Box>}
-              <Box margin={index > 0 ? { top: "xsmall" } : undefined} key={index} direction="row" justify="between">
+              <Box margin={index > 0 ? { top: "xsmall" } : undefined} direction="row" justify="between">
                 <Text weight="bold">{item[0]}</Text>
                 <Text>{item[1]}</Text>
               </Box>
-            </>
+            </Box>
           ))}
         </Box>
       </CardFooter>

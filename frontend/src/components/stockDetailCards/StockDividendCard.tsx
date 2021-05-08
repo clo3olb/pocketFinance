@@ -1,6 +1,6 @@
 import React from "react"
 import { useQuery } from "@apollo/client"
-import { Box, Grommet, Tab, Table, TableBody, TableCell, TableRow, Tabs, Text } from "grommet"
+import { Box, Tab, Table, TableBody, TableCell, TableRow, Tabs, Text } from "grommet"
 import { Alert, Analytics } from "grommet-icons"
 import Translation from "components/Translation"
 import { GET_DIVIDENDS_INFORMATION_BY_TICKER } from "etc/graphQlQueries"
@@ -9,8 +9,6 @@ import NoDataMessage from "components/NoDataMessage"
 import { CalendarEventsType, DividendHistoryType, PriceType, SummaryDetailType } from "types/QueryDataType"
 import { MS_IN_A_DAY, parseDate } from "etc/smallFunctions"
 import { LanguageType } from "components/Translation"
-import { tableTheme, tabsTheme } from "etc/customTheme"
-import { deepMerge } from "grommet/utils"
 import StockDetailCardTemplate from "template/StockDetailCardTemplate"
 
 const IconWrapper = () => <Analytics color="neutral-1" />
@@ -46,7 +44,6 @@ const StockDividendCard: React.FC<StockDividendCardPropsProps> = ({ ticker }) =>
   const divHistory: DividendHistoryType = data.dividendHistory
   const summary: SummaryDetailType = data.summaryDetail
   const price: PriceType = data.price
-  console.log(calendarData)
 
   return (
     <StockDetailCardTemplate header={{ icon: <IconWrapper />, title: { en: "Dividend Information", kr: "배당 정보" } }} body={{ pad: "none" }}>

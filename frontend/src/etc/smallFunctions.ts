@@ -27,3 +27,8 @@ export const getTimeDifference = (time1: any, time2: any) => {
   const time2Date = new Date(typeof time2 === "string" ? parseInt(time2) : time2)
   return Math.abs((time1Date.getTime() - time2Date.getTime()) / 1000)
 }
+
+export const toFixed = (input: any, count: number) => {
+  if (!input || !input.toFixed) return "-"
+  return input.toFixed(count)
+}

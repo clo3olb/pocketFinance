@@ -19,6 +19,7 @@ const typeDefs = gql`
     recommendationsBySymbol(ticker: String): Recommendations
     calendarEventsByTicker(ticker: String): CalendarEvents
     newsByTicker(ticker: String): News
+    trendings: Trendings
   }
 `;
 

@@ -31,7 +31,12 @@ const StockEarningsCard: React.FC<StockEarningsCardProps> = ({ ticker }) => {
 
   const earningsData: EarningsType = data.earnings
   const {
-    earningsChart: { currentQuarterEstimate: currEst, currentQuarterEstimateDate: currEstDate, currentQuarterEstimateYear: currEstYear, quarterly: earningsQuarterly },
+    earningsChart: {
+      currentQuarterEstimate: currEst,
+      currentQuarterEstimateDate: currEstDate,
+      currentQuarterEstimateYear: currEstYear,
+      quarterly: earningsQuarterly,
+    },
   } = earningsData
 
   const earningsBarChartData: ChartDataType = {
@@ -40,13 +45,13 @@ const StockEarningsCard: React.FC<StockEarningsCardProps> = ({ ticker }) => {
       {
         label: "Estimate",
         data: [...earningsQuarterly.map((item) => item.estimate), currEst],
-        backgroundColor: "#cab7f0",
+        backgroundColor: "#ace3cb",
         borderWidth: 0,
       },
       {
         label: "Actual",
         data: [...earningsQuarterly.map((item) => item.actual)],
-        backgroundColor: "#7D4CDB",
+        backgroundColor: "#5BDEA4",
         borderWidth: 0,
       },
     ],

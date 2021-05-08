@@ -73,6 +73,16 @@ export const GET_SEARCH_RESULT_BY_QUERY = gql`
   }
 `
 
+export const GET_TRENDING = gql`
+  query getTrendings {
+    trendings {
+      quotes {
+        symbol
+      }
+    }
+  }
+`
+
 export const GET_RECOMMENDATIONS_BY_TICKER = gql`
   query recommendationsBySymbol($ticker: String) {
     recommendations: recommendationsBySymbol(ticker: $ticker) {

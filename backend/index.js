@@ -9,6 +9,7 @@ const recommendations = require("./query/recommendations");
 const dividendHistory = require("./query/dividendHistory");
 const calendarEvents = require("./query/calendarEvents");
 const news = require("./query/news");
+const trending = require("./query/trending");
 
 const typeDefs = [
   queries,
@@ -21,6 +22,7 @@ const typeDefs = [
   dividendHistory.typeDefs,
   calendarEvents.typeDefs,
   news.typeDefs,
+  trending.typeDefs,
 ];
 const resolvers = [
   price.resolvers,
@@ -32,6 +34,7 @@ const resolvers = [
   dividendHistory.resolvers,
   calendarEvents.resolvers,
   news.resolvers,
+  trending.resolvers,
 ];
 
 const server = new ApolloServer({

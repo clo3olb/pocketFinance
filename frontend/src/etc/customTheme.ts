@@ -42,7 +42,12 @@ export const lightColorTheme: ThemeType = {
       control: "light-1",
       "neutral-1": "light-1", // White text color when gradient background
       placeholder: "neutral-1",
+
       border: "light-3",
+
+      // price change color
+      "accent-1": "#51c491",
+      "accent-2": "#E52634",
     },
   },
 }
@@ -63,6 +68,8 @@ export const darkColorTheme: ThemeType = {
       text: "#f0f0f0",
       "neutral-1": "#fefefe",
       border: "light-2",
+      "accent-1": "#5fe3a9",
+      "accent-2": "#f72837",
     },
     focus: {
       outline: {

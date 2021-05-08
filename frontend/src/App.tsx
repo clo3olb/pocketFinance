@@ -11,9 +11,11 @@ import { TranslationContextProvider } from "components/Translation"
 
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client"
 import PageSearch from "pages/Search"
+import { useDarkThemeContext } from "hooks/DarkThemeContext"
 
 // Initializing Chart Settings
 import { defaults } from "react-chartjs-2"
+
 defaults.font.family = "Montserrat"
 
 const client = new ApolloClient({
@@ -22,8 +24,9 @@ const client = new ApolloClient({
 })
 
 const App = () => {
+  const [isDarkTheme] = useDarkThemeContext()
   return (
-    <Grommet theme={lightTheme} className="App" full>
+    <Grommet theme={isDarkTheme ? darkTheme : lightTheme} className="App" full>
       <ApolloProvider client={client}>
         <TranslationContextProvider>
           <ResponsiveContext.Consumer>

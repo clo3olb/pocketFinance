@@ -1,10 +1,13 @@
 import { Box, Text, Sidebar as GSidebar, Menu, ResponsiveContext } from "grommet"
-import { PriceType } from "types/QueryDataType"
+import { PriceType, TrendingsType } from "types/QueryDataType"
 import { useQuery, gql } from "@apollo/client"
 import { Link } from "react-router-dom"
 import Translation, { useLanguageContext } from "./Translation"
 
 import { Language } from "grommet-icons"
+import { GET_TRENDING } from "etc/graphQlQueries"
+import LoadingSpinner from "components/LoadingSpinner"
+import NoDataMessage from "./NoDataMessage"
 
 const GET_PRICE_BY_TICKER = gql`
   query priceByTicker($ticker: String) {
@@ -13,6 +16,7 @@ const GET_PRICE_BY_TICKER = gql`
       regularMarketPrice
       regularMarketChange
       longName
+      currency
     }
   }
 `
@@ -29,13 +33,7 @@ const SideBarItem: React.FC<SideBarItemProps> = ({ ticker, index }) => {
   })
 
   if (loading) return <Box></Box>
-  if (error)
-    return (
-      <Box>
-        <Text>Error :( {JSON.stringify(error)}</Text>
-      </Box>
-    )
-  if (data.price === null || data.price === undefined) return <p>NODATA</p>
+  if (error || !data.price) return <NoDataMessage />
   const priceData: PriceType = data.price
 
   return (
@@ -59,10 +57,26 @@ const SideBarItem: React.FC<SideBarItemProps> = ({ ticker, index }) => {
           <Text weight="bold" size="small">
             ${priceData.regularMarketPrice}
           </Text>
-          <Text size="xsmall">{`$${priceData.regularMarketChange.toFixed(2)}`}</Text>
+          <Text size="xsmall" color={priceData.regularMarketChange > 0 ? "accent-1" : "accend-2"}>
+            {`$${priceData.regularMarketChange.toFixed(2)}`.replace("$-", "-$")}
+          </Text>
         </Box>
       </Box>
     </Link>
+  )
+}
+
+const Trendings = () => {
+  const { loading, error, data } = useQuery(GET_TRENDING)
+  if (loading) return <LoadingSpinner />
+  if (error || !data || !data.trendings || !data.trendings.quotes) return <NoDataMessage />
+  const trendings: TrendingsType = data.trendings
+  return (
+    <Box background="light-1">
+      {trendings.quotes.map((item, index) => (
+        <SideBarItem key={index} ticker={item.symbol} index={index} />
+      ))}
+    </Box>
   )
 }
 
@@ -111,11 +125,7 @@ const SideBar = () => {
               </Box>
             }
           >
-            <Box background="light-1">
-              {["TSLA", "MSFT", "CPNG", "AAPL", "SPYG"].map((ticker, index) => (
-                <SideBarItem key={index} ticker={ticker} index={index} />
-              ))}
-            </Box>
+            <Trendings />
           </GSidebar>
         )}
       </ResponsiveContext.Consumer>

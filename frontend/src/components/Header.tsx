@@ -1,9 +1,9 @@
 import { ChangeEventHandler, useEffect, useRef, useState } from "react"
 import Container from "components/Container"
 import { Box, Text, TextInput, Form, ResponsiveContext } from "grommet"
-import { FormSearch } from "grommet-icons"
+import { FormSearch, Moon, Sun } from "grommet-icons"
 import { useHistory, useLocation } from "react-router-dom"
-import globalVariable from "etc/globalVariable"
+import { useDarkThemeContext } from "hooks/DarkThemeContext"
 
 const Logo = () => {
   const history = useHistory()
@@ -55,6 +55,16 @@ const SearchBar = () => {
   )
 }
 
+const ThemeToggle = () => {
+  const [darkTheme, toggleDarkTheme] = useDarkThemeContext()
+
+  return (
+    <Box onClick={toggleDarkTheme} background="neutral-1" pad="xsmall" round="50%" elevation="small" hoverIndicator>
+      {darkTheme ? <Moon color="light-1" /> : <Sun color="text" />}
+    </Box>
+  )
+}
+
 const Header = () => {
   return (
     <ResponsiveContext.Consumer>
@@ -72,6 +82,7 @@ const Header = () => {
         >
           <Logo />
           <SearchBar />
+          <ThemeToggle />
         </Container>
       )}
     </ResponsiveContext.Consumer>

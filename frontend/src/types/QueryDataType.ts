@@ -163,3 +163,12 @@ export type NewsType = {
   providerPublishTime: string
   type: string
 }[]
+
+export type TrendingsType = {
+  count: number
+  quotes: {
+    symbol: string
+  }[]
+  jobTimestamp: number
+  startInterval: number
+}
