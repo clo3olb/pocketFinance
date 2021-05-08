@@ -32,3 +32,9 @@ export const toFixed = (input: any, count: number) => {
   if (!input || !input.toFixed) return "-"
   return input.toFixed(count)
 }
+
+export const limitNumberOfChars = (input: any, count: number = 15) => {
+  if (!input || !input.length) return "-"
+  if (input.length > count) return input
+  return input.slice(0, count) + "..."
+}

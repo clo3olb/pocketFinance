@@ -19,7 +19,7 @@ import { defaults } from "react-chartjs-2"
 defaults.font.family = "Montserrat"
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000",
+  uri: "/.netlify/functions/graphql",
   cache: new InMemoryCache(),
 })
 

@@ -8,6 +8,7 @@ import { Language } from "grommet-icons"
 import { GET_TRENDING } from "etc/graphQlQueries"
 import LoadingSpinner from "components/LoadingSpinner"
 import NoDataMessage from "./NoDataMessage"
+import { limitNumberOfChars } from "etc/smallFunctions"
 
 const GET_PRICE_BY_TICKER = gql`
   query priceByTicker($ticker: String) {
@@ -51,7 +52,7 @@ const SideBarItem: React.FC<SideBarItemProps> = ({ ticker, index }) => {
           <Text size="large" weight="bold">
             {priceData.symbol}
           </Text>
-          <Text size="xsmall">{priceData.longName.length > 17 ? priceData.longName.slice(0, 16) + "..." : priceData.longName}</Text>
+          <Text size="xsmall">{limitNumberOfChars(priceData.longName, 17)}</Text>
         </Box>
         <Box align="end">
           <Text weight="bold" size="small">
