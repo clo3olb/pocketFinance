@@ -3,7 +3,7 @@ import Container from "components/Container"
 import { Box, Text, TextInput, Form, ResponsiveContext } from "grommet"
 import { FormSearch, Moon, Sun } from "grommet-icons"
 import { useHistory, useLocation } from "react-router-dom"
-import { useDarkThemeContext } from "hooks/DarkThemeContext"
+import { useDarkThemeContext } from "hooks/useDarkThemeContext"
 
 const Logo = () => {
   const history = useHistory()

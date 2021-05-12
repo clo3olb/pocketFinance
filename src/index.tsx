@@ -1,4 +1,4 @@
-import { DarkThemeContextProvider } from "hooks/DarkThemeContext"
+import { DarkThemeContextProvider } from "hooks/useDarkThemeContext"
 import React from "react"
 import ReactDOM from "react-dom"
 import App from "./App"

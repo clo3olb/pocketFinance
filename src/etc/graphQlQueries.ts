@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client"
+import { gql } from "@apollo/client";
 
 export const GET_PRICE_BY_TICKER = gql`
   query priceByTicker($ticker: String) {
@@ -29,7 +29,7 @@ export const GET_PRICE_BY_TICKER = gql`
       twoHundredDayAverage
     }
   }
-`
+`;
 
 export const GET_EARNINGS_BY_TICKER = gql`
   query earningsByTicker($ticker: String) {
@@ -55,7 +55,7 @@ export const GET_EARNINGS_BY_TICKER = gql`
       financialCurrency
     }
   }
-`
+`;
 
 export const GET_SEARCH_RESULT_BY_QUERY = gql`
   query autoComplete($query: String) {
@@ -71,7 +71,7 @@ export const GET_SEARCH_RESULT_BY_QUERY = gql`
       }
     }
   }
-`
+`;
 
 export const GET_TRENDING = gql`
   query getTrendings {
@@ -81,7 +81,7 @@ export const GET_TRENDING = gql`
       }
     }
   }
-`
+`;
 
 export const GET_RECOMMENDATIONS_BY_TICKER = gql`
   query recommendationsBySymbol($ticker: String) {
@@ -93,7 +93,7 @@ export const GET_RECOMMENDATIONS_BY_TICKER = gql`
       }
     }
   }
-`
+`;
 
 export const GET_CALENDAR_EVENTS_BY_TICKER = gql`
   query calendarEventsByTicker($ticker: String) {
@@ -112,7 +112,7 @@ export const GET_CALENDAR_EVENTS_BY_TICKER = gql`
       dividendDate
     }
   }
-`
+`;
 
 export const GET_NEWS_BY_TICKER = gql`
   query newsByTicker($ticker: String) {
@@ -127,7 +127,7 @@ export const GET_NEWS_BY_TICKER = gql`
       }
     }
   }
-`
+`;
 
 export const GET_DIVIDENDS_INFORMATION_BY_TICKER = gql`
   query getCalendarEvents($ticker: String, $from: String) {
@@ -162,4 +162,4 @@ export const GET_DIVIDENDS_INFORMATION_BY_TICKER = gql`
       currency
     }
   }
-`
+`;

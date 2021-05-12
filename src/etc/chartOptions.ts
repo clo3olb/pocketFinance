@@ -1,6 +1,9 @@
-import { ChartOptions } from "chart.js"
+import { ChartOptions } from "chart.js";
 
 export const HistoryLineChartOptions: ChartOptions = {
+  animation: {
+    duration: 0,
+  },
   plugins: {
     legend: {
       display: false,
@@ -51,7 +54,7 @@ export const HistoryLineChartOptions: ChartOptions = {
       },
     },
   },
-}
+};
 
 export const EarningsBarChartOptions: ChartOptions = {
   plugins: {
@@ -69,9 +72,10 @@ export const EarningsBarChartOptions: ChartOptions = {
           const {
             formattedValue,
             dataset: { label },
-          } = context
-          if (formattedValue && label) return label.slice(0, 3) + ": " + formattedValue + "%"
-          return "Error"
+          } = context;
+          if (formattedValue && label)
+            return label.slice(0, 3) + ": " + formattedValue + "%";
+          return "Error";
         },
       },
     },
@@ -93,7 +97,7 @@ export const EarningsBarChartOptions: ChartOptions = {
       ticks: {
         // Include a dollar sign in the ticks
         callback: function (value, index, values) {
-          return value + "%"
+          return value + "%";
         },
       },
     },
@@ -105,4 +109,4 @@ export const EarningsBarChartOptions: ChartOptions = {
       },
     },
   },
-}
+};
