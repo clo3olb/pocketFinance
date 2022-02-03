@@ -61,10 +61,10 @@ const rangeButtonArray: RangeAndIntervalType[] = [
     { range: "5d", interval: "15m" },
     { range: "1mo", interval: "30m" },
     { range: "6mo", interval: "1d" },
-    { range: "ytd", interval: "1d" },
-    { range: "1y", interval: "1d" },
-    { range: "5y", interval: "1wk" },
-    { range: "max", interval: "1mo" },
+    // { range: "ytd", interval: "1d" },
+    // { range: "1y", interval: "1d" },
+    // { range: "5y", interval: "1wk" },
+    // { range: "max", interval: "1mo" },
 ];
 
 const HistoryLineChart: React.FC<HistoryLineChartProps> = ({ ticker }) => {
@@ -85,7 +85,6 @@ const HistoryLineChart: React.FC<HistoryLineChartProps> = ({ ticker }) => {
                 {rangeButtonArray.map((item) => (
                     <Button
                         key={item.range}
-                        plain
                         label={item.range.toUpperCase()}
                         active={lineChartProps.range === item.range}
                         size="small"

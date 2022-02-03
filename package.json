@@ -36,7 +36,8 @@
     "start": "react-scripts start",
     "start:lambda": "netlify-lambda serve src/lambda --config webpack.functions.js",
     "build": "run-p build:**",
-    "build:app": "react-scripts build"
+    "build:app": "react-scripts build",
+    "deploy": "npm run build && firebase deploy"
   },
   "eslintConfig": {
     "extends": [
@@ -57,7 +58,6 @@
     ]
   },
   "devDependencies": {
-    "netlify-lambda": "^2.0.6",
     "npm-run-all": "^4.1.5"
   },
   "proxy": "https://query1.finance.yahoo.com/"

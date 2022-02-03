@@ -54,7 +54,7 @@ const SideBarItem: React.FC<SideBarItemProps> = ({ ticker, index }) => {
                 </Box>
                 <Box align="end">
                     <Text weight="bold" size="small">
-                        ${priceData.regularMarketPrice}
+                        ${priceData.regularMarketPrice.toFixed(2)}
                     </Text>
                     <Text size="xsmall" color={priceData.regularMarketChange > 0 ? "accent-1" : "accend-2"}>
                         {`$${priceData.regularMarketChange.toFixed(2)}`.replace("$-", "-$")}

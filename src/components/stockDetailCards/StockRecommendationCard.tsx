@@ -11,69 +11,64 @@ import usePrice from "hooks/usePrice";
 const IconWrapper = () => <Group color="neutral-1" />;
 
 type RecommendProps = {
-  ticker: string;
+    ticker: string;
 };
 
 const Recommend: React.FC<RecommendProps> = ({ ticker }) => {
-  const price = usePrice(ticker);
+    const price = usePrice(ticker);
+    const scrollUp = () => {
+        window.scrollTo(0, 0);
+    };
 
-  if (!price) return <p>NODATA</p>;
+    if (!price) return <p>NODATA</p>;
 
-  return (
-    <Link to={`/${ticker}`}>
-      <Card
-        animation="fadeIn"
-        onClick={() => {}} // Just for hoverIndicator
-        hoverIndicator
-        gap="none"
-        fill
-        background="light-1"
-        round="small"
-      >
-        <CardHeader
-          pad="small"
-          direction="column"
-          justify="start"
-          align="start"
-          gap="none"
-          background="light-2"
-        >
-          <Text size="xlarge" weight="bold">
-            {price.symbol}
-          </Text>
-          <Text>{price.longName}</Text>
-        </CardHeader>
-        <CardBody
-          gap="small"
-          pad="small"
-          direction="row"
-          justify="between"
-          align="end"
-        >
-          <Box justify="between">
-            <Text size="small">{price.currency}</Text>
-            <Text weight="bold">{price.regularMarketPrice.toFixed(2)}</Text>
-          </Box>
-          <Box direction="row" justify="end">
-            {price.regularMarketChangePercent > 0 ? (
-              <CaretUpFill color="green" />
-            ) : (
-              <CaretDownFill color="red" />
-            )}
-            <Text
-              color={price.regularMarketChangePercent > 0 ? "green" : "red"}
-            >{`(${(price.regularMarketChangePercent * 100).toFixed(
-              2
-            )}%)`}</Text>
-          </Box>
-        </CardBody>
-      </Card>
-    </Link>
-  );
+    return (
+        <Link to={`/${ticker}`} onClick={scrollUp}>
+            <Card
+                animation="fadeIn"
+                onClick={() => {}} // Just for hoverIndicator
+                hoverIndicator
+                gap="none"
+                fill
+                background="light-1"
+                round="small"
+            >
+                <CardHeader
+                    pad="small"
+                    direction="column"
+                    justify="start"
+                    align="start"
+                    gap="none"
+                    background="light-2"
+                >
+                    <Text size="xlarge" weight="bold">
+                        {price.symbol}
+                    </Text>
+                    <Text>{price.longName}</Text>
+                </CardHeader>
+                <CardBody gap="small" pad="small" direction="row" justify="between" align="end">
+                    <Box justify="between">
+                        <Text size="small">{price.currency}</Text>
+                        <Text weight="bold">{price.regularMarketPrice.toFixed(2)}</Text>
+                    </Box>
+                    <Box direction="row" justify="end">
+                        {price.regularMarketChangePercent > 0 ? (
+                            <CaretUpFill color="green" />
+                        ) : (
+                            <CaretDownFill color="red" />
+                        )}
+                        <Text color={price.regularMarketChangePercent > 0 ? "green" : "red"}>{`(${(
+                            price.regularMarketChangePercent * 100
+                        ).toFixed(2)}%)`}</Text>
+                    </Box>
+                </CardBody>
+            </Card>
+        </Link>
+    );
 };
 
 type StockRecommendationCardProps = {
-  ticker: string;
+    ticker: string;
 };
 
 // prettier-ignore

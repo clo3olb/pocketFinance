@@ -1,4 +1,4 @@
-import { Grommet, Box, ResponsiveContext } from "grommet";
+import { Grommet, Box, ResponsiveContext, Card } from "grommet";
 import "styles/reset.css";
 import Container from "components/Container";
 import Header from "components/Header";
@@ -19,56 +19,60 @@ import "fb";
 defaults.font.family = "Montserrat";
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000/dev/graphql",
-  cache: new InMemoryCache(),
+    uri: "http://localhost:4000/dev/graphql",
+    cache: new InMemoryCache(),
 });
 
 const App = () => {
-  const [isDarkTheme] = useDarkThemeContext();
-  return (
-    <Grommet theme={isDarkTheme ? darkTheme : lightTheme} className="App" full>
-      <ApolloProvider client={client}>
-        <TranslationContextProvider>
-          <ResponsiveContext.Consumer>
-            {(size) => (
-              <Router>
-                <Header />
-                <Container
-                  direction={size !== "small" ? "row" : "column"}
-                  gap="medium"
-                  pad={
-                    size !== "small"
-                      ? "medium"
-                      : {
-                          top: "medium",
-                          bottom: "none",
-                          left: "none",
-                          right: "none",
-                        }
-                  }
-                >
-                  <Box flex gap="medium">
-                    <Switch>
-                      <Route path="/" exact component={PageHome} />
-                      <Route
-                        path="/search/:searchKeyword"
-                        component={PageSearch}
-                      />
-                      <Route path="/search" component={PageSearch} />
-                      <Route path="/:ticker" component={PageStockDetail} />
-                    </Switch>
-                  </Box>
-                  <Box width={size !== "small" ? "small" : ""}>
-                    <SideBar />
-                  </Box>
-                </Container>
-              </Router>
-            )}
-          </ResponsiveContext.Consumer>
-        </TranslationContextProvider>
-      </ApolloProvider>
-    </Grommet>
-  );
+    const [isDarkTheme] = useDarkThemeContext();
+    return (
+        <Grommet theme={isDarkTheme ? darkTheme : lightTheme} className="App" full>
+            <ApolloProvider client={client}>
+                <TranslationContextProvider>
+                    <ResponsiveContext.Consumer>
+                        {(size) => (
+                            <Router>
+                                <Box flex align="center">
+                                    <Box style={{ textAlign: "center", padding: 10 }}>
+                                        {" "}
+                                        Since YahooFinance API does not allow users to redistribute their information,
+                                        all price data are simulated random values.{" "}
+                                    </Box>
+                                </Box>
+                                <Header />
+                                <Container
+                                    direction={size !== "small" ? "row" : "column"}
+                                    gap="medium"
+                                    pad={
+                                        size !== "small"
+                                            ? "medium"
+                                            : {
+                                                  top: "medium",
+                                                  bottom: "none",
+                                                  left: "none",
+                                                  right: "none",
+                                              }
+                                    }
+                                >
+                                    <Box flex gap="medium">
+                                        <Switch>
+                                            <Route path="/" exact component={PageHome} />
+                                            <Route path="/search/:searchKeyword" component={PageSearch} />
+                                            <Route path="/search" component={PageSearch} />
+                                            <Route path="/:ticker" component={PageStockDetail} />
+                                        </Switch>
+                                    </Box>
+                                    <Box width={size !== "small" ? "small" : ""}>
+                                        <SideBar />
+                                    </Box>
+                                </Container>
+                            </Router>
+                        )}
+                    </ResponsiveContext.Consumer>
+                </TranslationContextProvider>
+            </ApolloProvider>
+        </Grommet>
+    );
 };
 
 export default App;
