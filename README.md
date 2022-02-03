@@ -1,1 +1,1 @@
-# My Finance Application
+# My Finance Web Application
